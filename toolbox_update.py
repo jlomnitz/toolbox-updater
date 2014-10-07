@@ -8,7 +8,7 @@ from os import path
 
 __version__ = '0.2.0'
 
-STABLE_VERSION=('develop', 'develop')
+STABLE_VERSION='develop'
 
 DEFAULT_TOOLBOX_VERSION = 'v0.2.1'
 DEFAULT_INTERFACE_VERSION = 'v0.2.0'
@@ -82,7 +82,7 @@ def update_c_toolbox(args):
     if args.stable_or_release == 'release':
         version=get_latest_release()
     if args.stable_or_release == 'stable':
-        version=STABLE_VERSION[0]
+        version=STABLE_VERSION
     versions = get_release_versions()
     if version not in versions:
         versions = get_remote_branches()
@@ -108,7 +108,7 @@ def update_python_interface(args):
     if args.stable_or_release == 'release':
         version=get_latest_release()
     if args.stable_or_release == 'stable':
-        version=STABLE_VERSION[1]
+        version=STABLE_VERSION
     versions = get_release_versions()
     if version not in versions:
         versions = get_remote_branches()
