@@ -94,7 +94,7 @@ def update_c_toolbox(args):
             return 1
     else:
         version = 'tags/'+version
-    print 'Building ' + version
+    print 'Building ' + version.split('/')[1]
     call(['git', 'checkout', version])
     if args.is_linux is True:
         call(['sudo', 'make', 'install'])
@@ -125,7 +125,7 @@ def update_python_interface(args):
             return 1
     else:
         version = 'tags/'+version
-    print 'Building ' + version
+    print 'Building ' + version.split('/')[1]
     call(['git', 'checkout', version])
     call(['sudo', 'python', 'setup.py', 'install'])
     os.chdir(pwd)
