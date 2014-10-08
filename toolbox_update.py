@@ -8,7 +8,7 @@ from os import path
 
 __version__ = '0.2.0'
 
-STABLE_VERSION='develop'
+STABLE_VERSION='develop-0.3.0'
 
 DEFAULT_TOOLBOX_VERSION = '$RELEASE'
 DEFAULT_INTERFACE_VERSION = '$RELEASE'
@@ -28,24 +28,26 @@ def parse_arguments():
     parser.add_argument('--release', dest='stable_or_release', action='store_const',
                         const='release', default='release',
                         help='build latest release version')
-    parser.add_argument('--toolbox_version', dest='toolbox_version',
+    parser.add_argument('--toolbo-version', dest='toolbox_version',
                         default=DEFAULT_TOOLBOX_VERSION, 
                         type=str,
                         help='build a specific version or branch of the c library')
-    parser.add_argument('--interface_version', dest='interface_version',
+    parser.add_argument('--interface-version', dest='interface_version',
                         default=DEFAULT_INTERFACE_VERSION, 
                         type=str,
                         help='build a specific version or branch of the python interface')
     parser.add_argument('--linux', dest='is_linux', action='store_true',
                         help='indicates if it should build using linux commands')
-    parser.add_argument('--toolbox_dict', dest='toolbox_dict', 
+    parser.add_argument('--toolbox-dir', dest='toolbox_dict', 
                         default='~/Documents/design-space-toolbox/',
                         type=str,
                         help='directory for the c toolbox local git repository')
-    parser.add_argument('--interface_dict', dest='interface_dict', 
+    parser.add_argument('--interface-dir', dest='interface_dict', 
                         default='~/Documents/python-design-space-interface/', 
                         type=str,
                         help='directory for the c toolbox local git repository')
+    parser.add_argument('--no-update', dest='no_update', action='store_true',
+                        help='indicates if it should switch without downloading from server')
     args = parser.parse_args()
     return args
 
@@ -77,7 +79,8 @@ def get_remote_branches():
 def update_c_toolbox(args):
     pwd = os.getcwd()
     os.chdir(path.expanduser(args.toolbox_dict))
-    call(['git', 'fetch', '--all'])
+    if args.no_update is False:
+        call(['git', 'fetch', '--all'])
     version = args.toolbox_version
     if version == '$RELEASE':
         version=get_latest_release()
@@ -108,7 +111,8 @@ def update_c_toolbox(args):
 def update_python_interface(args):
     pwd = os.getcwd()
     os.chdir(path.expanduser(args.interface_dict))
-    call(['git', 'fetch', '--all'])
+    if args.no_update is False:
+        call(['git', 'fetch', '--all'])
     version = args.interface_version
     if version == '$RELEASE':
         version=get_latest_release()
