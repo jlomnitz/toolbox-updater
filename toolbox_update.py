@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+# Copyright Jason G. Lomnitz 2014
 from subprocess import call, Popen, PIPE
 from distutils.version import StrictVersion
 import sys
@@ -7,11 +7,14 @@ import argparse
 import os
 from os import path
 
+__version__ = '0.2.0a0'
 
-__version__ = '0.2.0'
-
+# Temporarly uses the develop-0.3.0 branch. In the future, this will be
+# changed back to develop and develop-0.3.0 will be deleted.
 STABLE_VERSION='develop-0.3.0'
 
+# Default behavior is to download latest release version.
+# Special variables are $RELEASE and $STABLE.
 DEFAULT_TOOLBOX_VERSION = '$RELEASE'
 DEFAULT_INTERFACE_VERSION = '$RELEASE'
 
@@ -46,7 +49,13 @@ def parse_arguments():
                         default='~/Documents/python-design-space-interface/', 
                         type=str,
                         help='directory for the c toolbox local git repository')
-    parser.add_argument('--no-update', dest='no_update', action='store_true',
+    parser.add_argument('--only-toolbox', dest='single', action='store_const',
+                        const='toolbox',
+                        help='only update the c library')
+    parser.add_argument('--only-interface', dest='single', action='store_const',
+                        const='interface',
+                        help='only update the python interface')
+    parser.add_argument('--no-fetch', dest='no_update', action='store_true',
                         help='indicates if it should switch without downloading from server')
     args = parser.parse_args()
     return args
@@ -97,7 +106,14 @@ def update_c_toolbox(args):
             return 1
     else:
         version = 'tags/'+version
-    print 'Building ' + version.split('/')[1]
+    result = ''
+    while 1:
+        result = raw_input('Build C toolbox version ' + version.split('/')[1] + '?[Y/n]')
+        if result.lower() in ['y', 'n', '']:
+            break
+        print "'" + result + "' is not a valid response."
+    if result.lower() == 'n':
+        return 0     
     call(['git', 'checkout', version])
     if args.use_make is True:
         call(['sudo', 'make', 'install'])
@@ -116,6 +132,8 @@ def update_python_interface(args):
     version = args.interface_version
     if version == '$RELEASE':
         version=get_latest_release()
+    if version == '$STABLE':
+        version = STABLE_VERSION
     if args.stable_or_release == 'release':
         version=get_latest_release()
     if args.stable_or_release == 'stable':
@@ -129,7 +147,14 @@ def update_python_interface(args):
             return 1
     else:
         version = 'tags/'+version
-    print 'Building ' + version.split('/')[1]
+    result = ''
+    while 1:
+        result = raw_input('Build Python Interface version ' + version.split('/')[1] + '?[Y/n]')
+        if result.lower() in ['y', 'n', '']:
+            break
+        print "'" + result + "' is not a valid response."
+    if result.lower() == 'n':
+        return 0     
     call(['git', 'checkout', version])
     call(['sudo', 'python', 'setup.py', 'install'])
     os.chdir(pwd)
@@ -141,6 +166,11 @@ if __name__ == '__main__':
         args.use_make = False
     else:
         args.use_make = True
-    print args
-    update_c_toolbox(args)
-    update_python_interface(args)
+    if args.single != 'interface':
+        update_c_toolbox(args)
+    if args.single != 'toolbox':
+        update_python_interface(args)
+    
+    
+    
+    
