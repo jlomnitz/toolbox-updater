@@ -7,7 +7,7 @@ import argparse
 import os
 from os import path
 
-__version__ = '0.2.0a0'
+__version__ = '1.0.0a1'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
@@ -25,7 +25,7 @@ pulls from origin and runs make/xcodebuild to install depending on
 linux/mac system. The command builds the latest release as default.'''
 
 def parse_arguments(): 
-    parser = argparse.ArgumentParser(prog='Design space toolbox and interface updater',
+    parser = argparse.ArgumentParser(prog='Toolbox Update Script',
                                      description=DESCRIPTION_STRING)
     parser.add_argument('--stable', dest='stable_or_release', action='store_const',
                         const='stable',
