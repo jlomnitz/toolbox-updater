@@ -193,9 +193,6 @@ def update_script(args):
           'https://bitbucket.org/jglomnitz/toolbox-update-script/raw/develop/toolbox_update.py',
           '-o',
           'toolbox_update_temp.py'])
-    print '\n\nVersion Diff:'
-    call(['diff', 'toolbox_update.py', 'toolbox_update_temp.py'])
-    print '\n\n'
     result = ''
     try:
         from toolbox_update_temp import __version__ as new_version
