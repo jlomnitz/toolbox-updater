@@ -57,6 +57,9 @@ def parse_arguments():
                         help='only update the python interface')
     parser.add_argument('--no-fetch', dest='no_update', action='store_true',
                         help='indicates if it should switch without downloading from server')
+    parser.add_argument('--update-script', dest=single, action='store_const',
+                        const='script',
+                        help='update the updater script')
     args = parser.parse_args()
     return args
 
@@ -159,13 +162,23 @@ def update_python_interface(args):
     call(['sudo', 'python', 'setup.py', 'install'])
     os.chdir(pwd)
     return 0
-        
+
+def update_script(args):
+    call(['curl',
+          'https://bitbucket.org/jglomnitz/toolbox-update-script/raw/develop/toolbox_update.py',
+          '-O'])
+    call(['chmod', '+x', 'toolbox_update.py'])
+    return
+    
 if __name__ == '__main__':
     args=parse_arguments()
     if sys.platform.startswith('darwin'):
         args.use_make = False
     else:
         args.use_make = True
+    if args.single == 'script':
+        update_script(args)
+        return
     if args.single != 'interface':
         update_c_toolbox(args)
     if args.single != 'toolbox':
