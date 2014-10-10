@@ -48,7 +48,7 @@ Current stable version of the toolbox is 'develop-0.3.0', which will change
 back to 'develop' once v0.3.0 of the toolbox becomes the primary version.'''
 
 def parse_arguments(): 
-    parser = argparse.ArgumentParser(prog='Toolbox Update Script',
+    parser = argparse.ArgumentParser(prog='toolbox_update',
                                      description=DESCRIPTION_STRING)
     parser.add_argument('--stable', dest='stable_or_release', action='store_const',
                         const='stable',
