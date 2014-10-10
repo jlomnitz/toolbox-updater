@@ -1,5 +1,25 @@
 #!/usr/bin/python
-# Copyright Jason G. Lomnitz 2014
+'''
+Design Space Toolbox Update Script
+
+Copyright (C) 2014 Jason G. Lomnitz.
+
+The Design Space Toolbox Update Script is free software: you can redistribute it 
+and/or modify it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+The Design Space Toolbox Update Script is distributed in the hope that it will
+be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with the Design Space Toolbox Update Script. If not, see 
+<http://www.gnu.org/licenses/>.
+'''
+
+
 from subprocess import call, Popen, PIPE
 from distutils.version import StrictVersion
 import sys
@@ -61,7 +81,7 @@ def parse_arguments():
     parser.add_argument('--no-fetch', dest='no_update', action='store_true',
                         help='indicates if it should switch without downloading from server')
     parser.add_argument('--update-script', dest='self_update', action='store_true',
-                        help='update the updater script')
+                        help='update this script')
     parser.add_argument('--version', dest='print_version', action='store_true',
                         help='print script version')
     args = parser.parse_args()
