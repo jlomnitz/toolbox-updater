@@ -27,7 +27,7 @@ import argparse
 import os
 from os import path
 
-__version__ = '1.0.0a2'
+__version__ = '1.0.0b1'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
