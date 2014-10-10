@@ -2,9 +2,11 @@
 
 from subprocess import call, Popen, PIPE
 from distutils.version import StrictVersion
+import sys
 import argparse
 import os
 from os import path
+
 
 __version__ = '0.2.0'
 
@@ -36,8 +38,6 @@ def parse_arguments():
                         default=DEFAULT_INTERFACE_VERSION, 
                         type=str,
                         help='build a specific version or branch of the python interface')
-    parser.add_argument('--linux', dest='is_linux', action='store_true',
-                        help='indicates if it should build using linux commands')
     parser.add_argument('--toolbox-dir', dest='toolbox_dict', 
                         default='~/Documents/design-space-toolbox/',
                         type=str,
@@ -99,7 +99,7 @@ def update_c_toolbox(args):
         version = 'tags/'+version
     print 'Building ' + version.split('/')[1]
     call(['git', 'checkout', version])
-    if args.is_linux is True:
+    if args.use_make is True:
         call(['sudo', 'make', 'install'])
     else:
         call(['xcodebuild'])
@@ -137,6 +137,10 @@ def update_python_interface(args):
         
 if __name__ == '__main__':
     args=parse_arguments()
+    if sys.platform.startswith('darwin'):
+        args.use_make = False
+    else:
+        args.use_make = True
     print args
     update_c_toolbox(args)
     update_python_interface(args)
