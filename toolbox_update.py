@@ -33,7 +33,7 @@ def parse_arguments():
     parser.add_argument('--release', dest='stable_or_release', action='store_const',
                         const='release', default='release',
                         help='build latest release version')
-    parser.add_argument('--toolbo-version', dest='toolbox_version',
+    parser.add_argument('--toolbox-version', dest='toolbox_version',
                         default=DEFAULT_TOOLBOX_VERSION, 
                         type=str,
                         help='build a specific version or branch of the c library')
