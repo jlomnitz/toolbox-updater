@@ -178,11 +178,11 @@ if __name__ == '__main__':
         args.use_make = True
     if args.single == 'script':
         update_script(args)
-        return
-    if args.single != 'interface':
-        update_c_toolbox(args)
-    if args.single != 'toolbox':
-        update_python_interface(args)
+    else:
+        if args.single != 'interface':
+            update_c_toolbox(args)
+        if args.single != 'toolbox':
+            update_python_interface(args)
     
     
     
