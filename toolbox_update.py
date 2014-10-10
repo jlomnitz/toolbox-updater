@@ -202,7 +202,7 @@ def update_script(args):
         print 'Cannot compile new version of toolbox. Aborting.'
         return
     while 1:
-        result = raw_input('Update script '+__version+'->'+new_version+'?[Y/n]')
+        result = raw_input('Update script '+__version__+'->'+new_version+'?[Y/n]')
         if result.lower() in ['y', 'n', '']:
             break
         print "'" + result + "' is not a valid response."
