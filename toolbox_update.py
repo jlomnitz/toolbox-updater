@@ -27,7 +27,7 @@ import argparse
 import os
 from os import path
 
-__version__ = '1.0.0a1'
+__version__ = '1.0.0a2'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
@@ -193,17 +193,23 @@ def update_script(args):
           'https://bitbucket.org/jglomnitz/toolbox-update-script/raw/develop/toolbox_update.py',
           '-o',
           'toolbox_update.py.temp'])
+    print '\n\nVersion Diff:\n\n'
     call(['diff', 'toolbox_update.py', 'toolbox_update.py.temp'])
     result = ''
-    from toolbox_update.py.temp import __version__ as new_version
+    try:
+        from toolbox_update.py.temp import __version__ as new_version
+    except:
+        print 'Cannot compile new version of toolbox. Aborting.'
+        return
     while 1:
-        result = raw_input('Update script '+__version+'->'new_version'?[Y/n]')
+        result = raw_input('Update script '+__version+'->'+new_version+'?[Y/n]')
         if result.lower() in ['y', 'n', '']:
             break
         print "'" + result + "' is not a valid response."
     if result.lower() == 'n':
         call(['rm', 'toolbox_update.py.temp'])
         return 0 
+    call(['mv', 'toolbox_update.py', 'toolbox_update.py.old'])
     call(['mv', 'toolbox_update.py.temp', 'toolbox_update.py'])
     call(['chmod', '+x', 'toolbox_update.py'])
     return
