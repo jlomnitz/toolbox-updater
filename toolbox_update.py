@@ -143,11 +143,11 @@ def update_c_toolbox(args):
         return 0     
     call(['git', 'checkout', version])
     if args.use_make is True:
-        call(['sudo', 'make', 'install'])
+        call(['make', 'install'])
     else:
         call(['xcodebuild'])
-        call(['sudo', 'cp'] + os.listdir('build/Release/usr/local/include/') + ['/usr/local/include/designspace/'])
-        call(['sudo', 'cp', 'build/Release/libdesignspace.dylib', '/usr/local/lib/'])
+        call(['cp'] + os.listdir('build/Release/usr/local/include/') + ['/usr/local/include/designspace/'])
+        call(['cp', 'build/Release/libdesignspace.dylib', '/usr/local/lib/'])
     os.chdir(pwd)
     return 0
 
@@ -183,7 +183,7 @@ def update_python_interface(args):
     if result.lower() == 'n':
         return 0     
     call(['git', 'checkout', version])
-    call(['sudo', 'python', 'setup.py', 'install'])
+    call(['python', 'setup.py', 'install'])
     os.chdir(pwd)
     return 0
 
