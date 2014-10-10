@@ -31,7 +31,7 @@ __version__ = '1.0.0b1'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
-STABLE_VERSION='develop-0.3.0'
+STABLE_VERSION='develop'
 
 # Default behavior is to download latest release version.
 # Special variables are $RELEASE and $STABLE.
