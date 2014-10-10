@@ -21,8 +21,11 @@ DEFAULT_INTERFACE_VERSION = '$RELEASE'
 DESCRIPTION_STRING = \
 ''' Script to update the Design Space Toolbox V2 and its
 python interface. The script switches to the appropriate branch and 
-pulls from origin and runs make/xcodebuild to install depending on 
-linux/mac system. The command builds the latest release as default.'''
+pulls from origin and installs the packages on the either Mac OS X or 
+linux systems. This script does not install any dependencies.
+Executing the script without any options builds the latest release version.
+Current stable version of the toolbox is 'develop-0.3.0', which will change 
+back to 'develop' once v0.3.0 of the toolbox becomes the primary version.'''
 
 def parse_arguments(): 
     parser = argparse.ArgumentParser(prog='Toolbox Update Script',
