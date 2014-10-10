@@ -39,8 +39,8 @@ DEFAULT_TOOLBOX_VERSION = '$RELEASE'
 DEFAULT_INTERFACE_VERSION = '$RELEASE'
 
 DESCRIPTION_STRING = \
-''' Script to update the Design Space Toolbox V2 and its
-python interface. The script switches to the appropriate branch and 
+''' Script to update the Design Space Toolbox V2 and the Design Space
+Python Interface. The script switches to the appropriate branch and 
 pulls from origin and installs the packages on the either Mac OS X or 
 linux systems. This script does not install any dependencies.
 Executing the script without any options builds the latest release version.
@@ -50,25 +50,29 @@ back to 'develop' once v0.3.0 of the toolbox becomes the primary version.'''
 def parse_arguments(): 
     parser = argparse.ArgumentParser(prog='toolbox_update',
                                      description=DESCRIPTION_STRING)
-    parser.add_argument('--stable', dest='stable_or_release', action='store_const',
+    parser.add_argument('-v', '--version', dest='print_version', action='store_true',
+                        help='print script version')
+    parser.add_argument('-s', '--stable', dest='stable_or_release', action='store_const',
                         const='stable',
                         help='build latest stable version')
-    parser.add_argument('--release', dest='stable_or_release', action='store_const',
+    parser.add_argument('-r', '--release', dest='stable_or_release', action='store_const',
                         const='release', default='release',
                         help='build latest release version')
-    parser.add_argument('--toolbox-version', dest='toolbox_version',
+    parser.add_argument('-t', '--toolbox-version', dest='toolbox_version',
                         default=DEFAULT_TOOLBOX_VERSION, 
                         type=str,
                         help='build a specific version or branch of the c library')
-    parser.add_argument('--interface-version', dest='interface_version',
+    parser.add_argument('-i', '--interface-version', dest='interface_version',
                         default=DEFAULT_INTERFACE_VERSION, 
                         type=str,
                         help='build a specific version or branch of the python interface')
-    parser.add_argument('--toolbox-dir', dest='toolbox_dict', 
+    parser.add_argument('-u', '--update-script', dest='self_update', action='store_true',
+                        help='update this script')
+    parser.add_argument('-T', '--toolbox-dir', dest='toolbox_dict', 
                         default='~/Documents/design-space-toolbox/',
                         type=str,
                         help='directory for the c toolbox local git repository')
-    parser.add_argument('--interface-dir', dest='interface_dict', 
+    parser.add_argument('-I', '--interface-dir', dest='interface_dict', 
                         default='~/Documents/python-design-space-interface/', 
                         type=str,
                         help='directory for the c toolbox local git repository')
@@ -80,10 +84,6 @@ def parse_arguments():
                         help='only update the python interface')
     parser.add_argument('--no-fetch', dest='no_update', action='store_true',
                         help='indicates if it should switch without downloading from server')
-    parser.add_argument('--update-script', dest='self_update', action='store_true',
-                        help='update this script')
-    parser.add_argument('--version', dest='print_version', action='store_true',
-                        help='print script version')
     args = parser.parse_args()
     return args
 
