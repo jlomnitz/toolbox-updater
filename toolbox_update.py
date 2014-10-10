@@ -57,8 +57,7 @@ def parse_arguments():
                         help='only update the python interface')
     parser.add_argument('--no-fetch', dest='no_update', action='store_true',
                         help='indicates if it should switch without downloading from server')
-    parser.add_argument('--update-script', dest=single, action='store_const',
-                        const='script',
+    parser.add_argument('--update-script', dest='self_update', action='store_true',
                         help='update the updater script')
     args = parser.parse_args()
     return args
@@ -176,7 +175,7 @@ if __name__ == '__main__':
         args.use_make = False
     else:
         args.use_make = True
-    if args.single == 'script':
+    if args.self_update == True:
         update_script(args)
     else:
         if args.single != 'interface':
