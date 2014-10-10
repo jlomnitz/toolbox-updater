@@ -84,6 +84,8 @@ def parse_arguments():
                         help='only update the python interface')
     parser.add_argument('--no-fetch', dest='no_update', action='store_true',
                         help='indicates if it should switch without downloading from server')
+    parser.add_argument('--restore-old', dest='restore', action='store_true',
+                        help='indicates if it should switch without downloading from server')
     args = parser.parse_args()
     return args
 
@@ -212,6 +214,19 @@ def update_script(args):
     call(['chmod', '+x', 'toolbox_update.py'])
     return
 
+def update_script(args):
+    global __version__
+    result = ''
+    while 1:
+        result = raw_input('Restore to previous script?[Y/n]')
+        if result.lower() in ['y', 'n', '']:
+            break
+        print "'" + result + "' is not a valid response."
+    if result.lower() == 'n':
+        return 0 
+    call(['mv', 'toolbox_update.py.old', 'toolbox_update.py'])
+    call(['chmod', '+x', 'toolbox_update.py'])
+    return
 
 def __main__(args):
     if args.print_version == True:
@@ -219,6 +234,9 @@ def __main__(args):
         return
     if args.self_update == True:
         update_script(args)
+        return
+    if args.restore is True:
+        restore_old(args)
         return
     if sys.platform.startswith('darwin'):
         args.use_make = False
