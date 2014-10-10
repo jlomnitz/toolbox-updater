@@ -192,12 +192,12 @@ def update_script(args):
     call(['curl',
           'https://bitbucket.org/jglomnitz/toolbox-update-script/raw/develop/toolbox_update.py',
           '-o',
-          'toolbox_update.py.temp'])
+          'toolbox_update_temp.py'])
     print '\n\nVersion Diff:\n\n'
-    call(['diff', 'toolbox_update.py', 'toolbox_update.py.temp'])
+    call(['diff', 'toolbox_update.py', 'toolbox_update_temp.py'])
     result = ''
     try:
-        from toolbox_update.py.temp import __version__ as new_version
+        from toolbox_update_temp import __version__ as new_version
     except:
         print 'Cannot compile new version of toolbox. Aborting.'
         return
@@ -210,7 +210,7 @@ def update_script(args):
         call(['rm', 'toolbox_update.py.temp'])
         return 0 
     call(['mv', 'toolbox_update.py', 'toolbox_update.py.old'])
-    call(['mv', 'toolbox_update.py.temp', 'toolbox_update.py'])
+    call(['mv', 'toolbox_update_temp.py', 'toolbox_update.py'])
     call(['chmod', '+x', 'toolbox_update.py'])
     return
 
