@@ -59,6 +59,8 @@ def parse_arguments():
                         help='indicates if it should switch without downloading from server')
     parser.add_argument('--update-script', dest='self_update', action='store_true',
                         help='update the updater script')
+    parser.add_argument('--version', dest='print_version', action='store_true',
+                        help='print script version')
     args = parser.parse_args()
     return args
 
@@ -168,20 +170,27 @@ def update_script(args):
           '-O'])
     call(['chmod', '+x', 'toolbox_update.py'])
     return
-    
-if __name__ == '__main__':
-    args=parse_arguments()
+
+
+def __main__(args):
+    if args.print_version == True:
+        print 'Toolbox Update Script '+ __version__
+        return
+    if args.self_update == True:
+        update_script(args)
+        return
     if sys.platform.startswith('darwin'):
         args.use_make = False
     else:
         args.use_make = True
-    if args.self_update == True:
-        update_script(args)
-    else:
-        if args.single != 'interface':
-            update_c_toolbox(args)
-        if args.single != 'toolbox':
-            update_python_interface(args)
+    if args.single != 'interface':
+        update_c_toolbox(args)
+    if args.single != 'toolbox':
+        update_python_interface(args)
+
+if __name__ == '__main__':
+    args=parse_arguments()
+    __main__(args)
     
     
     
