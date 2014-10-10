@@ -188,14 +188,16 @@ def update_python_interface(args):
     return 0
 
 def update_script(args):
+    global __version__
     call(['curl',
           'https://bitbucket.org/jglomnitz/toolbox-update-script/raw/develop/toolbox_update.py',
           '-o',
           'toolbox_update.py.temp'])
     call(['diff', 'toolbox_update.py', 'toolbox_update.py.temp'])
     result = ''
+    from toolbox_update.py.temp import __version__ as new_version
     while 1:
-        result = raw_input('Replace update script?[Y/n]')
+        result = raw_input('Update script '+__version+'->'new_version'?[Y/n]')
         if result.lower() in ['y', 'n', '']:
             break
         print "'" + result + "' is not a valid response."
