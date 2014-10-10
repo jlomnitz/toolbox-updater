@@ -190,7 +190,19 @@ def update_python_interface(args):
 def update_script(args):
     call(['curl',
           'https://bitbucket.org/jglomnitz/toolbox-update-script/raw/develop/toolbox_update.py',
-          '-O'])
+          '-o',
+          'toolbox_update.py.temp'])
+    call(['diff', 'toolbox_update.py', 'toolbox_update.py.temp'])
+    result = ''
+    while 1:
+        result = raw_input('Replace update script?[Y/n]')
+        if result.lower() in ['y', 'n', '']:
+            break
+        print "'" + result + "' is not a valid response."
+    if result.lower() == 'n':
+        call(['rm', 'toolbox_update.py.temp'])
+        return 0 
+    call(['mv', 'toolbox_update.py.temp', 'toolbox_update.py'])
     call(['chmod', '+x', 'toolbox_update.py'])
     return
 
