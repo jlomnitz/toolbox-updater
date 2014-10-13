@@ -151,7 +151,6 @@ def update_c_toolbox(args):
         print 'Building using make...'
         cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
         out, err = cmd.communicate()
-        print 'Finding errors...'
         p = Popen(['grep', 'error'], stdin=PIPE)
         p.communicate(input=out)
         p = Popen(['grep', 'error'], stdin=PIPE)
@@ -160,14 +159,14 @@ def update_c_toolbox(args):
         print 'Building using xcodebuild...'
         cmd = Popen(['xcodebuild'], stdout=PIPE, stderr=PIPE)
         out, err = cmd.communicate()
-        print 'Finding errors...'
         p = Popen(['grep', 'error'], stdin=PIPE)
         p.communicate(input=out)
         p = Popen(['grep', 'error'], stdin=PIPE)
         p.communicate(input=err)
-        print 'Finding installing...'
+        print 'Installing...'
         call(['cp'] + os.listdir('build/Release/usr/local/include/') + ['/usr/local/include/designspace/'])
         call(['cp', 'build/Release/libdesignspace.dylib', '/usr/local/lib/'])
+        print 'Done'
     os.chdir(pwd)
     return 0
 
