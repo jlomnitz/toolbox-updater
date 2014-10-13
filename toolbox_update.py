@@ -118,8 +118,6 @@ def get_remote_branches():
 def update_c_toolbox(args):
     pwd = os.getcwd()
     os.chdir(path.expanduser(args.toolbox_dict))
-    if args.no_update is False:
-        call(['git', 'fetch', '--all'])
     version = args.toolbox_version
     if version == '$RELEASE':
         version=get_latest_release()[1:]
@@ -174,8 +172,6 @@ def update_c_toolbox(args):
 def update_python_interface(args):
     pwd = os.getcwd()
     os.chdir(path.expanduser(args.interface_dict))
-    if args.no_update is False:
-        call(['git', 'fetch', '--all'])
     version = args.interface_version
     if version == '$RELEASE':
         version=get_latest_release()[1:]
@@ -207,12 +203,18 @@ def update_python_interface(args):
     os.chdir(pwd)
     return 0
 
+def update_repositories(args):
+    if args.no_update is False:
+        pwd = os.getcwd()
+        os.chdir(path.expanduser(args.toolbox_dict))
+        os.chdir(path.expanduser(args.interface_dict))
+        os.chdir(pwd)
+    return
+
 def verbose_mode_fn(args, directory):
     global STABLE_VERSION
     pwd = os.getcwd()
     os.chdir(path.expanduser(directory))
-    if args.no_update is False:
-        call(['git', 'fetch', '--all'])
     print 'Release versions:'
     versions = get_release_versions()
     release = get_latest_release()
@@ -232,7 +234,7 @@ def verbose_mode_fn(args, directory):
     os.chdir(pwd)
     
 def verbose_mode(args):
-    print 'C toolbox:'
+    print 'C toolbox:'   
     verbose_mode_fn(args, args.toolbox_dict)
     print 'Python interface:'
     verbose_mode_fn(args, args.interface_dict)
@@ -281,14 +283,15 @@ def __main__(args):
     if args.print_version is True:
         print 'Toolbox Update Script '+ __version__
         return
-    if args.verbose_mode is True:
-        verbose_mode(args)
-        return
     if args.self_update is True:
         update_script(args)
         return
     if args.restore is True:
         restore_old(args)
+        return
+    update_repositories(args)
+    if args.verbose_mode is True:
+        verbose_mode(args)
         return
     if sys.platform.startswith('darwin'):
         args.use_make = False
