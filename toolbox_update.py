@@ -44,14 +44,15 @@ Python Interface. The script switches to the appropriate branch and
 pulls from origin and installs the packages on the either Mac OS X or 
 linux systems. This script does not install any dependencies.
 Executing the script without any options builds the latest release version.
-Current stable version of the toolbox is 'develop-0.3.0', which will change 
-back to 'develop' once v0.3.0 of the toolbox becomes the primary version.'''
+Current stable version of the toolbox is 'develop'.'''
 
 def parse_arguments(): 
     parser = argparse.ArgumentParser(prog='toolbox_update',
                                      description=DESCRIPTION_STRING)
-    parser.add_argument('-v', '--version', dest='print_version', action='store_true',
+    parser.add_argument('--version', dest='print_version', action='store_true',
                         help='print script version')
+    parser.add_argument('-v', dest='verbose_mode', action='store_true',
+                        help='run program in verbose mode (does not install, show available versions)')
     parser.add_argument('-s', '--stable', dest='stable_or_release', action='store_const',
                         const='stable',
                         help='build latest stable version')
@@ -206,6 +207,37 @@ def update_python_interface(args):
     os.chdir(pwd)
     return 0
 
+def verbose_mode_fn(args, directory):
+    global STABLE_VERSION
+    pwd = os.getcwd()
+    os.chdir(path.expanduser(directory))
+    if args.no_update is False:
+        call(['git', 'fetch', '--all'])
+    print 'Release versions:'
+    versions = get_release_versions()
+    release = get_latest_release()
+    for version in versions:
+        current = '  '+version[1:]
+        if version == release:
+            current += ' ($RELEASE)'
+        print current
+    print 'Development versions:'
+    versions = get_remote_branches()
+    stable = STABLE_VERSION
+    for version in versions:
+        current = '  '+version.split('/')[1]
+        if version == stable:
+            current += '  ($STABLE)'
+        print current
+    os.chdir(pwd)
+    
+def verbose_mode(args):
+    print 'C toolbox:'
+    verbose_mode_fn(args, args.toolbox_dict)
+    print 'Python interface:'
+    verbose_mode_fn(args, args.interface_dict)
+    
+    
 def update_script(args):
     global __version__
     call(['curl',
@@ -246,10 +278,13 @@ def restore_old(args):
     return
 
 def __main__(args):
-    if args.print_version == True:
+    if args.print_version is True:
         print 'Toolbox Update Script '+ __version__
         return
-    if args.self_update == True:
+    if args.verbose_mode is True:
+        verbose_mode(args)
+        return
+    if args.self_update is True:
         update_script(args)
         return
     if args.restore is True:
