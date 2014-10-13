@@ -12,17 +12,24 @@ To install type in the following commands in a terminal window:
     curl https://bitbucket.org/jglomnitz/toolbox-update-script/raw/v1.2.0/toolbox_update.py -O
     chmod +x toolbox_update.py
 
-To update (recommended after install):
+To update the script (recommended after install):
 
     ./toolbox_update.py --update-script
 
-To update a pre-installed version of the C toolbox and Python package to latest release version:
+This script updates the Design Space V2 C toolbox and Python package. It requires git access to these repositories [direct requests for access to these repositories to Jason Lomnitz (jlomn@ucdavis.edu)].
+
+To update these packages to the latest release versions:
 
     sudo ./toolbox_update.py --release
 
 For the stable development version:
 
     sudo ./toolbox_update.py --stable
+
+For more information, refer to the help page:
+
+    ./toolbox_update -h
+
 
 ### Who do I talk to? ###
 
