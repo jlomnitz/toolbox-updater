@@ -127,14 +127,14 @@ def update_c_toolbox(args):
     if args.stable_or_release == 'stable':
         version=STABLE_VERSION
     versions = get_release_versions()
-    if version not in versions:
+    if 'v'+version not in versions:
         versions = get_remote_branches()
         version = 'origin/'+version
         if version not in versions:
             raise ValueError, 'selected version of toolbox does not exist'
             return 1
     else:
-        version = 'tags/'+version
+        version = 'tags/v'+version
     result = ''
     while 1:
         result = raw_input('Build C toolbox version ' + version.split('/')[1] + '?[Y/n]')
@@ -168,14 +168,14 @@ def update_python_interface(args):
     if args.stable_or_release == 'stable':
         version=STABLE_VERSION
     versions = get_release_versions()
-    if version not in versions:
+    if 'v'+version not in versions:
         versions = get_remote_branches()
         version = 'origin/'+version
         if version not in versions:
             raise ValueError, 'selected version of toolbox does not exist'
             return 1
     else:
-        version = 'tags/'+version
+        version = 'tags/v'+version
     result = ''
     while 1:
         result = raw_input('Build Python Interface version ' + version.split('/')[1] + '?[Y/n]')
@@ -214,7 +214,7 @@ def update_script(args):
     call(['chmod', '+x', 'toolbox_update.py'])
     return
 
-def update_script(args):
+def restore_old(args):
     global __version__
     result = ''
     while 1:
