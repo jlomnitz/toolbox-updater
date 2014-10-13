@@ -121,9 +121,11 @@ def update_c_toolbox(args):
         call(['git', 'fetch', '--all'])
     version = args.toolbox_version
     if version == '$RELEASE':
-        version=get_latest_release()
+        version=get_latest_release()[1:]
+    if version == '$STABLE':
+        version = STABLE_VERSION
     if args.stable_or_release == 'release':
-        version=get_latest_release()
+        version=get_latest_release()[1:]
     if args.stable_or_release == 'stable':
         version=STABLE_VERSION
     versions = get_release_versions()
@@ -160,11 +162,11 @@ def update_python_interface(args):
         call(['git', 'fetch', '--all'])
     version = args.interface_version
     if version == '$RELEASE':
-        version=get_latest_release()
+        version=get_latest_release()[1:]
     if version == '$STABLE':
         version = STABLE_VERSION
     if args.stable_or_release == 'release':
-        version=get_latest_release()
+        version=get_latest_release()[1:]
     if args.stable_or_release == 'stable':
         version=STABLE_VERSION
     versions = get_release_versions()
