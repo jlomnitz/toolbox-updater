@@ -232,6 +232,8 @@ def verbose_mode_fn(args, directory):
     stable = STABLE_VERSION
     for version in versions:
         version = version.split('/')[1]
+        if version == master:
+            continue
         if version == stable:
             current = ' * '
         else:
