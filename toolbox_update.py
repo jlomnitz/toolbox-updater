@@ -207,7 +207,9 @@ def update_repositories(args):
     if args.no_update is False:
         pwd = os.getcwd()
         os.chdir(path.expanduser(args.toolbox_dict))
+        call(['git', 'fetch', '--all'])
         os.chdir(path.expanduser(args.interface_dict))
+        call(['git', 'fetch', '--all'])
         os.chdir(pwd)
     return
 
@@ -226,6 +228,7 @@ def verbose_mode_fn(args, directory):
     print 'Development versions:'
     versions = get_remote_branches()
     stable = STABLE_VERSION
+    print stable
     for version in versions:
         current = '  '+version.split('/')[1]
         if version == stable:
@@ -234,9 +237,11 @@ def verbose_mode_fn(args, directory):
     os.chdir(pwd)
     
 def verbose_mode(args):
-    print 'C toolbox:'   
+    print 'C toolbox:' 
+    print '----------'   
     verbose_mode_fn(args, args.toolbox_dict)
     print 'Python interface:'
+    print '-----------------'   
     verbose_mode_fn(args, args.interface_dict)
     
     
