@@ -228,9 +228,9 @@ def verbose_mode_fn(args, directory):
     print 'Development versions:'
     versions = get_remote_branches()
     stable = STABLE_VERSION
-    print stable
     for version in versions:
-        current = '  '+version.split('/')[1]
+        version = version.split('/')[1]
+        current = '  '+version
         if version == stable:
             current += '  ($STABLE)'
         print current
