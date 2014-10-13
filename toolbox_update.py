@@ -241,6 +241,11 @@ def verbose_mode_fn(args, directory):
     os.chdir(pwd)
     
 def verbose_mode(args):
+    global DESCRIPTION_STRING
+    global __version__
+    print 'toolbox_update.py   ' +  __version__
+    print DESCRIPTION_STRING
+    print ''
     print 'C toolbox:' 
     print '----------'   
     verbose_mode_fn(args, args.toolbox_dict)
