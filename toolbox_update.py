@@ -27,7 +27,7 @@ import argparse
 import os
 from os import path
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
@@ -221,18 +221,22 @@ def verbose_mode_fn(args, directory):
     versions = get_release_versions()
     release = get_latest_release()
     for version in versions:
-        current = '  '+version[1:]
         if version == release:
-            current += ' ($RELEASE)'
+            current = ' * '
+        else:
+            current = '   '
+        current += version[1:]
         print current
     print 'Development versions:'
     versions = get_remote_branches()
     stable = STABLE_VERSION
     for version in versions:
         version = version.split('/')[1]
-        current = '  '+version
         if version == stable:
-            current += '  ($STABLE)'
+            current = ' * '
+        else:
+            current = '   '
+        current += version
         print current
     os.chdir(pwd)
     
