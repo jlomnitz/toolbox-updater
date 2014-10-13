@@ -147,9 +147,21 @@ def update_c_toolbox(args):
         return 0     
     call(['git', 'checkout', version])
     if args.use_make is True:
-        call(['make', 'install'])
+        ## call(['make', 'install'])
+        print 'Building using make...'
+        cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
+        out, err = cmd.communicate()
+        print 'Finding errors...'
+        call(['grep', out, 'error'])
+        call(['grep', err, 'error'])
     else:
-        call(['xcodebuild'])
+        print 'Building using xcodebuild...'
+        cmd = Popen(['xcodebuild'], stdout=PIPE, stderr=PIPE)
+        out, err = cmd.communicate()
+        print 'Finding errors...'
+        call(['grep', out, 'error'])
+        call(['grep', err, 'error'])
+        print 'Finding installing...'
         call(['cp'] + os.listdir('build/Release/usr/local/include/') + ['/usr/local/include/designspace/'])
         call(['cp', 'build/Release/libdesignspace.dylib', '/usr/local/lib/'])
     os.chdir(pwd)
