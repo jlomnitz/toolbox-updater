@@ -28,7 +28,7 @@ For the stable development version:
 
 For more information, refer to the help page:
 
-    ./toolbox_update -h
+    ./toolbox_update.py -h
 
 
 ### Who do I talk to? ###
