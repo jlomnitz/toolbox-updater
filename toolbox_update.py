@@ -337,7 +337,7 @@ def restore_old(args):
     return
 
 def __main__(args):
-    call(['mkdir', '-p', args.build_dir])
+    call(['mkdir', '-p', path.expanduser(args.build_dir]))
     if args.print_version is True:
         print 'Toolbox Update Script '+ __version__
         return
