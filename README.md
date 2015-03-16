@@ -1,5 +1,7 @@
 # README #
 
+This is part of the Design Space Toolbox V2 project, a software implementation of the System Design Space method developed by Jason G. Lomnitz, originally developed in the laboratory of Michael A. Savageau. This method decomposes complex nonlinear systems into a finite number of tractable nonlinear subsystems.
+
 ### What is this repository for? ###
 
 Installation script for the Design Space Toolbox C library (libdesignspace) and its Python interface (dspace package). This script updates the repositories through git and identifies the latest version. By default the script downloads the most recent release version.
