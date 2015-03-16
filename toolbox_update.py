@@ -84,7 +84,7 @@ def parse_arguments():
                         type=str,
                         help='directory for the c toolbox local git repository')
     parser.add_argument('-G', '--glpk-dir', dest='glpk_dir', 
-                        default='$INSTALL/glpk-with-thread-specific-env/', 
+                        default='glpk-with-thread-specific-env/', 
                         type=str,
                         help='directory for the c toolbox local git repository')
     parser.add_argument('--only-toolbox', dest='single', action='store_const',
