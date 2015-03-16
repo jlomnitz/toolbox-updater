@@ -6,7 +6,7 @@ Installation script for the Design Space Toolbox C library (libdesignspace) and 
 
 ### How do I get set up? ###
 
-To install type in the following commands in a terminal window:
+To install, type in the following commands in a terminal window:
 
     cd
     curl https://bitbucket.org/jglomnitz/toolbox-update-script/raw/v1.2.0/toolbox_update.py -O
