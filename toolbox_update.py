@@ -41,6 +41,8 @@ STABLE_VERSION='develop'
 DEFAULT_TOOLBOX_VERSION = '$RELEASE'
 DEFAULT_INTERFACE_VERSION = '$RELEASE'
 
+TOOLBOX_BUILD_DIR = '~/.DSTV2_INSTALL'
+
 DESCRIPTION_STRING = \
 ''' Script to update the Design Space Toolbox V2 and the Design Space
 Python Interface. The script switches to the appropriate branch and 
@@ -81,7 +83,7 @@ def parse_arguments():
                         type=str,
                         help='directory for the c toolbox local git repository')
     parser.add_argument('-G', '--glpk-dir', dest='glpk_dir', 
-                        default='~/Documents/glpk-with-thread-specific-env/', 
+                        default='$INSTALL/glpk-with-thread-specific-env/', 
                         type=str,
                         help='directory for the c toolbox local git repository')
     parser.add_argument('--only-toolbox', dest='single', action='store_const',
@@ -130,8 +132,14 @@ def get_remote_branches():
        
 def install_custom_glpk(args):
     pwd = os.getcwd()
-    os.chdir(path.expanduser(args.glpk_dir))
+    os.chdir(path.expanduser(TOOLBOX_BUILD_DIR))
+    call(['git',
+          'clone', 
+          'https://jglomnitz@bitbucket.org/jglomnitz/glpk-with-thread-specific-env.git', 
+          args.glpk_dir])
+    os.chdir(args.glpk_dir)
     call(['git', 'pull', 'master'])
+    print 'Configuring GLPK (modified for pthread) using make...'
     cmd = Popen(['./configure'], stdout=PIPE, stderr=PIPE)
     out, err = cmd.communicate()
     p = Popen(['grep', 'error'], stdin=PIPE)
@@ -139,12 +147,12 @@ def install_custom_glpk(args):
     p = Popen(['grep', 'error'], stdin=PIPE)
     p.communicate(input=err)
     print 'Building GLPK (modified for pthread) using make...'
-    cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
-    out, err = cmd.communicate()
-    p = Popen(['grep', 'error'], stdin=PIPE)
-    p.communicate(input=out)
-    p = Popen(['grep', 'error'], stdin=PIPE)
-    p.communicate(input=err)
+    ## cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
+    ## out, err = cmd.communicate()
+    ## p = Popen(['grep', 'error'], stdin=PIPE)
+    ## p.communicate(input=out)
+    ## p = Popen(['grep', 'error'], stdin=PIPE)
+    ## p.communicate(input=err)
 
 
 def update_c_toolbox(args):
