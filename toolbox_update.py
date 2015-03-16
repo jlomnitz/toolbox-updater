@@ -79,8 +79,8 @@ def parse_arguments():
                         default='~/Documents/design-space-toolbox/',
                         type=str,
                         help='directory for the c toolbox local git repository')
-    parser.add_argument('-I', '--interface-dir', dest='interface_dict', 
-                        default='~/Documents/python-design-space-interface/', 
+    parser.add_argument('-I', '--interface-dir', dest='interface_dir', 
+                        default='python-design-space-interface', 
                         type=str,
                         help='directory for the c toolbox local git repository')
     parser.add_argument('-G', '--glpk-dir', dest='glpk_dir', 
@@ -214,7 +214,8 @@ def update_c_toolbox(args):
 
 def update_python_interface(args):
     pwd = os.getcwd()
-    os.chdir(path.expanduser(args.interface_dict))
+    os.chdir(path.expanduser(args.build_dir))
+    os.chdir(args.interface_dir)
     version = args.interface_version
     if version == '$RELEASE':
         version=get_latest_release()[1:]
@@ -251,7 +252,14 @@ def update_repositories(args):
         pwd = os.getcwd()
         os.chdir(path.expanduser(args.toolbox_dict))
         call(['git', 'fetch', '--all'])
-        os.chdir(path.expanduser(args.interface_dict))
+        os.chdir(path.expanduser(args.build_dir))
+        dirs = os.listdir(path.expanduser(args.build_dir))
+        if args.interface_dir not in dirs:
+            call(['git',
+                  'clone', 
+                  'https://jglomnitz@bitbucket.org/jglomnitz/python-design-space-interface.git', 
+                  args.interface_dir])
+        os.chdir(args.interface_dir)
         call(['git', 'fetch', '--all'])
         os.chdir(pwd)
     return
