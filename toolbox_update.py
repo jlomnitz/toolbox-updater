@@ -135,7 +135,7 @@ def install_custom_glpk(args):
     pwd = os.getcwd()
     os.chdir(path.expanduser(args.build_dir))
     dirs = os.listdir(path.expanduser(args.build_dir))
-    if args.glpk not in dirs:
+    if args.glpk_dir not in dirs:
         call(['git',
               'clone', 
               'https://jglomnitz@bitbucket.org/jglomnitz/glpk-with-thread-specific-env.git', 
