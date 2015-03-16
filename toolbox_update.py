@@ -148,12 +148,12 @@ def install_custom_glpk(args):
     p = Popen(['grep', 'error'], stdin=PIPE)
     p.communicate(input=err)
     print 'Building GLPK (modified for pthread) using make...'
-    ## cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
-    ## out, err = cmd.communicate()
-    ## p = Popen(['grep', 'error'], stdin=PIPE)
-    ## p.communicate(input=out)
-    ## p = Popen(['grep', 'error'], stdin=PIPE)
-    ## p.communicate(input=err)
+    cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
+    out, err = cmd.communicate()
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=out)
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=err)
 
 
 def update_c_toolbox(args):
