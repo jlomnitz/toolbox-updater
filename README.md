@@ -20,10 +20,10 @@ This script updates the Design Space V2 C toolbox and Python package. It require
 
 The C toolbox has dependencies on the following libraries:
 
-1. libprotobuf
-2. libprotobuf-c (> v1.0.0)
-3. GNU Scientific Library
-4. GNU Linear Programming Kit (modified for parallel analysis of multiple linear programming problems).
+1. libprotobuf. [`stable`]
+2. libprotobuf-c (> v1.0.0) [`stable`]
+3. GNU Scientific Library. [`stable` and `release`]
+4. GNU Linear Programming Kit (modified for parallel analysis of multiple linear programming problems) [`stable` and `release`]
 
 Libraries (1)-(3) must be installed by the user. The modified version of the GLPK is automatically installed by this script by adding the `--glpk-dependency` flag during installation of the library.
 
