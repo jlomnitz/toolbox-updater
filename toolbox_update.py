@@ -27,7 +27,10 @@ import argparse
 import os
 from os import path
 
-__version__ = '1.2.0'
+
+## dependency_checks = {'
+
+__version__ = '1.4.0'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
@@ -77,6 +80,10 @@ def parse_arguments():
                         default='~/Documents/python-design-space-interface/', 
                         type=str,
                         help='directory for the c toolbox local git repository')
+    parser.add_argument('-G', '--glpk-dir', dest='glpk_dir', 
+                        default='~/Documents/glpk-with-thread-specific-env/', 
+                        type=str,
+                        help='directory for the c toolbox local git repository')
     parser.add_argument('--only-toolbox', dest='single', action='store_const',
                         const='toolbox',
                         help='only update the c library')
@@ -87,9 +94,15 @@ def parse_arguments():
                         help='indicates if it should switch without downloading from server')
     parser.add_argument('--restore-old', dest='restore', action='store_true',
                         help='indicates if it should switch without downloading from server')
+    parser.add_argument('--glpk-dependency', dest='glpk_dep', action='store_true',
+                        help='indicates if it should install glpk dependency')
     args = parser.parse_args()
     return args
 
+def c_toolbox_version():
+    cmd = Popen(['grep', '__DS_DESIGN_SPACE_VERSION__', 'DSTypes.h'], stdout=PIPE, stderr=PIPE)
+    out, err = cmd.communicate()
+    
 def get_latest_release():
     versions = get_release_versions()
     strict = [StrictVersion(i[1:]) for i in versions]
@@ -115,6 +128,25 @@ def get_remote_branches():
     remote = [i.strip() for i in remote]
     return remote
        
+def install_custom_glpk(args):
+    pwd = os.getcwd()
+    os.chdir(path.expanduser(args.glpk_dir))
+    call(['git', 'pull', 'master'])
+    cmd = Popen(['./configure'], stdout=PIPE, stderr=PIPE)
+    out, err = cmd.communicate()
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=out)
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=err)
+    print 'Building GLPK (modified for pthread) using make...'
+    cmd = Popen(['make', 'install'], stdout=PIPE, stderr=PIPE)
+    out, err = cmd.communicate()
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=out)
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=err)
+
+
 def update_c_toolbox(args):
     pwd = os.getcwd()
     os.chdir(path.expanduser(args.toolbox_dict))
@@ -202,7 +234,7 @@ def update_python_interface(args):
     call(['python', 'setup.py', 'install'])
     os.chdir(pwd)
     return 0
-
+    
 def update_repositories(args):
     if args.no_update is False:
         pwd = os.getcwd()
@@ -313,6 +345,8 @@ def __main__(args):
         args.use_make = False
     else:
         args.use_make = True
+    if args.glpk_dep == True:
+        install_custom_glpk(args)
     if args.single != 'interface':
         update_c_toolbox(args)
     if args.single != 'toolbox':
