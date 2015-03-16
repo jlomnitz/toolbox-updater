@@ -30,7 +30,7 @@ from os import path
 
 ## dependency_checks = {'
 
-__version__ = '1.4.0'
+__version__ = '1.4.0a0'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
@@ -40,8 +40,6 @@ STABLE_VERSION='develop'
 # Special variables are $RELEASE and $STABLE.
 DEFAULT_TOOLBOX_VERSION = '$RELEASE'
 DEFAULT_INTERFACE_VERSION = '$RELEASE'
-
-TOOLBOX_BUILD_DIR = '~/.DSTV2_INSTALL'
 
 DESCRIPTION_STRING = \
 ''' Script to update the Design Space Toolbox V2 and the Design Space
@@ -58,6 +56,9 @@ def parse_arguments():
                         help='print script version')
     parser.add_argument('-v', dest='verbose_mode', action='store_true',
                         help='run program in verbose mode (does not install, show available versions)')
+    parser.add_argument('-B', '--Build-dir', dest='build_dir',
+                        default='~/.DSTV2_INSTALL',
+                        help='indicates the toolbox build directory')
     parser.add_argument('-s', '--stable', dest='stable_or_release', action='store_const',
                         const='stable',
                         help='build latest stable version')
@@ -132,7 +133,7 @@ def get_remote_branches():
        
 def install_custom_glpk(args):
     pwd = os.getcwd()
-    os.chdir(path.expanduser(TOOLBOX_BUILD_DIR))
+    os.chdir(path.expanduser(args.build_dir))
     call(['git',
           'clone', 
           'https://jglomnitz@bitbucket.org/jglomnitz/glpk-with-thread-specific-env.git', 
@@ -336,6 +337,7 @@ def restore_old(args):
     return
 
 def __main__(args):
+    call(['mkdir', '-p', args.build_dir])
     if args.print_version is True:
         print 'Toolbox Update Script '+ __version__
         return
