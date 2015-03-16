@@ -133,7 +133,7 @@ def get_remote_branches():
        
 def install_custom_glpk(args):
     pwd = os.getcwd()
-    os.chdir(path.expanduser(args.build_dir))
+    os.chdir(path.expanduser(args.build_dir))
     call(['git',
           'clone', 
           'https://jglomnitz@bitbucket.org/jglomnitz/glpk-with-thread-specific-env.git', 
