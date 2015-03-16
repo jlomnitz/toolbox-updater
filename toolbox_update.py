@@ -139,7 +139,7 @@ def install_custom_glpk(args):
           'https://jglomnitz@bitbucket.org/jglomnitz/glpk-with-thread-specific-env.git', 
           args.glpk_dir])
     os.chdir(args.glpk_dir)
-    call(['git', 'pull', 'master'])
+    call(['git', 'pull', 'origin', 'master'])
     print 'Configuring GLPK (modified for pthread) using make...'
     cmd = Popen(['./configure'], stdout=PIPE, stderr=PIPE)
     out, err = cmd.communicate()
