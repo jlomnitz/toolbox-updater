@@ -22,7 +22,7 @@ This script updates the Design Space V2 C toolbox and Python package. It require
 
 The C toolbox has dependencies on the following libraries (`stable` and `release` indicate the dependencies of the stable and release version of the C toolbox):
 
-1. libgsl `stable`
+1. libgsl `stable` `release`
 2. libprotobuf `stable`
 3. libprotobuf-c (> v1.0.0) `stable`
 4. GNU Scientific Library `stable` `release`
