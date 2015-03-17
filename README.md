@@ -20,14 +20,15 @@ To update the script (recommended after install):
 
 This script updates the Design Space V2 C toolbox and Python package. It requires git access to the Design Space V2 C Toolbox, currently a private repository until release. To request access to this library, contact Jason Lomnitz email: jlomn@ucdavis.edu.
 
-The C toolbox has dependencies on the following libraries:
+The C toolbox has dependencies on the following libraries (`stable` and `release` indicate the dependencies of the stable and release version of the C toolbox):
 
-1. libprotobuf. `stable`
-2. libprotobuf-c (> v1.0.0) `stable`
-3. GNU Scientific Library. `stable` `release`
-4. GNU Linear Programming Kit (modified for parallel analysis of multiple linear programming problems) `stable``release`
+1. libgsl `stable`
+2. libprotobuf `stable`
+3. libprotobuf-c (> v1.0.0) `stable`
+4. GNU Scientific Library `stable` `release`
+5. GNU Linear Programming Kit (modified for parallel analysis of multiple linear programming problems) `stable``release`
 
-Libraries (1)-(3) must be installed by the user. The modified version of the GLPK is automatically installed by this script by adding the `--glpk-dependency` flag during installation of the library.
+Libraries (1)-(4) must be installed by the user. The modified version of the GLPK is automatically installed by this script by adding the `--glpk-dependency` flag during installation of the library.
 
 The Python interface requires Python 2.7.x. The Python Interface provides plotting utilities that are added to the base package by importing the dspace.plotutils package that has the folliwing dependencies:
 
