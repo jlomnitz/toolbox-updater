@@ -255,6 +255,7 @@ def update_repositories(args):
         os.chdir(path.expanduser(args.build_dir))
         dirs = os.listdir(path.expanduser(args.build_dir))
         if args.interface_dir not in dirs:
+            print 'Creating ' + args.interface_dir + ' at ' + os.chdir(path.expanduser(args.build_dir))
             call(['git',
                   'clone', 
                   'https://jglomnitz@bitbucket.org/jglomnitz/python-design-space-interface.git', 
