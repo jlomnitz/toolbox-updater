@@ -1,0 +1,18 @@
+Sat Mar 21 02:04:00 2015 Jason G. Lomnitz <jlomn@ucdavis.edu>
+
+	* toolbox_update 1.4.0 has been released.
+
+	* ChangeLog
+	Added the project ChangeLog.
+
+	* toolbox_update.py 
+	Modified the update script to automatically manage 
+	downloading and installing the GLPK library (modified
+	to allow for concurrent analysis of multiple linear
+	programming problems) and the Python Interface (now
+	released for public downloads. These repositories are
+	added to a specific build directory (default 
+	~/.DSTV2_INSTALL).
+
+	* LICENSE
+	Added the license file to the project.
