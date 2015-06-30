@@ -26,7 +26,7 @@ The C toolbox has dependencies on the following libraries (`stable` and `release
 2. libprotobuf `stable`
 3. libprotobuf-c (> v1.0.0) `stable`
 4. GNU Scientific Library `stable` `release`
-5. GNU Linear Programming Kit (modified for parallel analysis of multiple linear programming problems) `stable``release`
+5. GNU Linear Programming Kit (modified for parallel analysis of multiple linear programming problems) `stable` `release`
 
 Libraries (1)-(4) must be installed by the user. The modified version of the GLPK is automatically installed by this script by adding the `--glpk-dependency` flag during installation of the library.
 
