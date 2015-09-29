@@ -43,11 +43,11 @@ To install, one must first have access to the C library repository and it must b
 
 Once the repository is cloned, first time installation of the library should use the following command:
 
-    sudo ./toolbox_update --stable --glpk-dependency
+    sudo ./toolbox_update.py --stable --glpk-dependency
 
 alternatively, to install the latest release version:
 
-    sudo ./toolbox_update --release --glpk-dependency
+    sudo ./toolbox_update.py --release --glpk-dependency
 
 ### Updating the toolbox ###
 
