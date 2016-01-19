@@ -67,4 +67,4 @@ For more information, refer to the help page:
 
 ### Who do I talk to? ###
 
-Any questions please contact Jason Lomnitz (jlomn@ucdavis.edu)
+Any questions, please contact Jason Lomnitz via e-mail (jlomn@ucdavis.edu) and with "DSTV2 Q:" as the subject prefix.
