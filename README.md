@@ -41,15 +41,17 @@ If the included plotting utilities are not required, these dependencies need not
 
 To install, one must first have access to the C library repository and it must be cloned [default location is ~/Documents/design-space-c-toolbox].
 
-Once the repository is cloned, first time installation of the library should use the following command:
+Once the repository is cloned, first time installation of the library should use the following command,
 
     sudo ./toolbox_update.py --stable --glpk-dependency
 
-alternatively, to install the latest release version:
+which instructs the update script to download and install a modified version of the GNU Linear Programming Kit, a dependency, that supports analysis of multiple linear programming problems in parallel.  The update script build the most recent stable version of the toolbox, which is recommended over the current release version. Alternatively, one may install the latest release version through the following command,
 
     sudo ./toolbox_update.py --release --glpk-dependency
 
+
 ### Updating the toolbox ###
+
 
 To update these packages to the latest release versions:
 
