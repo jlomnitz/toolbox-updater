@@ -1,6 +1,16 @@
+Tue Feb 9 02:28:00 2016 Jason G. Lomnitz <jlomn@ucdavis.edu>
+
+	* toolbox_update.py 2.0.0 has been released.
+
+	* toolbox_update.py
+	Modified script to support the open source release of 
+	the Design Space Toolbox V2 C Library.  All repositories
+	are now downloaded to the build directory.
+
+	
 Sat Mar 21 02:04:00 2015 Jason G. Lomnitz <jlomn@ucdavis.edu>
 
-	* toolbox_update 1.4.0 has been released.
+	* toolbox_update.py 1.4.0 has been released.
 
 	* ChangeLog
 	Added the project ChangeLog.
