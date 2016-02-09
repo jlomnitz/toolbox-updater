@@ -75,8 +75,8 @@ def parse_arguments():
                         help='build a specific version or branch of the python interface')
     parser.add_argument('-u', '--update-script', dest='self_update', action='store_true',
                         help='update this script')
-    parser.add_argument('-T', '--toolbox-dir', dest='toolbox_dict', 
-                        default='~/Documents/design-space-toolbox/',
+    parser.add_argument('-T', '--toolbox-dir', dest='toolbox_dir', 
+                        default='design-space-toolbox',
                         type=str,
                         help='directory for the c toolbox local git repository')
     parser.add_argument('-I', '--interface-dir', dest='interface_dir', 
@@ -160,7 +160,8 @@ def install_custom_glpk(args):
 
 def update_c_toolbox(args):
     pwd = os.getcwd()
-    os.chdir(path.expanduser(args.toolbox_dict))
+    os.chdir(path.expanduser(args.build_dir))
+    os.chdir(args.toolbox_dir)
     version = args.toolbox_version
     if version == '$RELEASE':
         version=get_latest_release()[1:]
@@ -250,10 +251,17 @@ def update_python_interface(args):
 def update_repositories(args):
     if args.no_update is False:
         pwd = os.getcwd()
-        os.chdir(path.expanduser(args.toolbox_dict))
-        call(['git', 'fetch', '--all'])
         os.chdir(path.expanduser(args.build_dir))
         dirs = os.listdir(path.expanduser(args.build_dir))
+        if args.toolbox_dir not in dirs:
+            print 'Creating ' + args.toolbox_dir + ' at ' + path.expanduser(args.build_dir)
+            call(['git',
+                  'clone', 
+                  'https://jglomnitz@bitbucket.org/jglomnitz/design-space-toolbox.git', 
+                  args.toolbox_dir])
+        os.chdir(args.toolbox_dir)
+        call(['git', 'fetch', '--all'])
+        os.chdir(pwd)
         if args.interface_dir not in dirs:
             print 'Creating ' + args.interface_dir + ' at ' + path.expanduser(args.build_dir)
             call(['git',
