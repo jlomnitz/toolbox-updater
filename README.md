@@ -18,7 +18,7 @@ To update the script (recommended after install):
 
     ./toolbox_update.py --update-script
 
-This script updates the Design Space V2 C toolbox and Python package. It requires git access to the Design Space V2 C Toolbox, currently a private repository until release. To request access to this library, contact Jason Lomnitz email: jlomn@ucdavis.edu.
+This script updates the Design Space V2 C toolbox and Python package.
 
 The C toolbox has dependencies on the following libraries (`stable` and `release` indicate the dependencies of the stable and release version of the C toolbox):
 
