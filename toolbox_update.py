@@ -30,7 +30,7 @@ from os import path
 
 ## dependency_checks = {'
 
-__version__ = '2.0.0'
+__version__ = '3.0.0a1'
 
 # Temporarly uses the develop-0.3.0 branch. In the future, this will be
 # changed back to develop and develop-0.3.0 will be deleted.
@@ -87,6 +87,10 @@ def parse_arguments():
                         default='glpk-with-thread-specific-env', 
                         type=str,
                         help='directory for the c toolbox local git repository')
+    parser.add_argument('-P', '--popup-dir', dest='popup_dir', 
+                        default='jupyter-notebook-popup-widget', 
+                        type=str,
+                        help='directory for the c toolbox local git repository')
     parser.add_argument('--only-toolbox', dest='single', action='store_const',
                         const='toolbox',
                         help='only update the c library')
@@ -99,6 +103,8 @@ def parse_arguments():
                         help='indicates if it should switch without downloading from server')
     parser.add_argument('--glpk-dependency', dest='glpk_dep', action='store_true',
                         help='indicates if it should install glpk dependency')
+    parser.add_argument('--popup-widget', dest='popup_dep', action='store_true',
+                        help='indicates if it should install the Jupyter Notebook popup widget')
     args = parser.parse_args()
     return args
 
@@ -156,7 +162,27 @@ def install_custom_glpk(args):
     p.communicate(input=out)
     p = Popen(['grep', 'error'], stdin=PIPE)
     p.communicate(input=err)
+    os.chdir(pwd)
 
+def install_jupyter_popup(args):
+    pwd = os.getcwd()
+    os.chdir(path.expanduser(args.build_dir))
+    dirs = os.listdir(path.expanduser(args.build_dir))
+    if args.popup_dir not in dirs:
+        call(['git',
+              'clone', 
+              'https://jglomnitz@bitbucket.org/jglomnitz/jupyter-notebook-popup-widget.git', 
+              args.glpk_dir])
+    os.chdir(args.glpk_dir)
+    call(['git', 'pull', 'origin', 'master'])
+    print 'Installing Jupyter Notebook Popup widget for the Python Design Space ToolboxV2...'
+    cmd = Popen(['python', 'setup.py', 'install'], stdout=PIPE, stderr=PIPE)
+    out, err = cmd.communicate()
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=out)
+    p = Popen(['grep', 'error'], stdin=PIPE)
+    p.communicate(input=err)    
+    os.chdir(pwd)
 
 def update_c_toolbox(args):
     pwd = os.getcwd()
@@ -376,6 +402,8 @@ def __main__(args):
         args.use_make = True
     if args.glpk_dep == True:
         install_custom_glpk(args)
+    if args.popup_dep == True:
+        install_jupyter_popup(args)
     if args.single != 'interface':
         update_c_toolbox(args)
     if args.single != 'toolbox':
